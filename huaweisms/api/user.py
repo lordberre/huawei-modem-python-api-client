@@ -33,8 +33,10 @@ def login(ctx, user_name, password):
     # type: (ApiCtx, str, str) -> ...
     headers = common_headers()
     url = "{}/user/login".format(ctx.api_base_url)
-
-    password_value = b64_sha256(user_name + b64_sha256(password) + ctx.login_token)
+    if password != "":
+        password_value = b64_sha256(user_name + b64_sha256(password) + ctx.login_token)
+    else:
+        password_value = ""
 
     xml_data = """
     <?xml version:"1.0" encoding="UTF-8"?>
